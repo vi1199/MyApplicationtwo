@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:padding="20dp"
+    android:layout_height="match_parent"
+    android:background="#d2f4d2">
+
+    <TextView
+        android:text="Name"
+        android:paddingBottom="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/textName"
+        android:textColor="#f08080"/>
+
+    <TextView
+        android:text="TextView"
+        android:paddingBottom="5dp"
+        android:textColor="#424242"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textName"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/textNoOfItems" />
+
+    <TextView
+        android:text="TextView"
+        android:paddingBottom="5dp"
+        android:textColor="#424242"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textNoOfItems"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/textTotalMoney" />
+
+    <TextView
+        android:text="TextView"
+        android:paddingBottom="5dp"
+        android:textColor="#424242"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textOrderCode"
+        android:layout_below="@+id/textTotalMoney"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="TextView"
+        android:paddingBottom="5dp"
+        android:textColor="#424242"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textAddress"
+        android:layout_below="@+id/textOrderCode"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+</RelativeLayout>
