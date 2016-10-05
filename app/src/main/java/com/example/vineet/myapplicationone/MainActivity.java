@@ -80,9 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.new_tab_layout);
         tabLayout.setupWithViewPager(viewPager);
-
-//        listitemto = new ArrayList<ListItems>();
-//        Log.d("list is"," : "+listitemto);
+        listitemto = new ArrayList<ListItems>();
 //        recycleAdapter  = new RecycleAdapter(getApplicationContext(),R.layout.uitextlist,listitemto);
 //        recyclerView.setAdapter(recycleAdapter);
 
@@ -174,19 +172,6 @@ public class MainActivity extends AppCompatActivity {
         parselist.getFango_name();
     }
 
-    private String convertTime (String time) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        SimpleDateFormat format1 = new SimpleDateFormat("hh:mm aa MM-dd");
-        java.util.Date date = null;
-        try {
-            date = format.parse(time);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        String newDate = format1.format(date);
-        return newDate;
-    }
-
     public void setupViewPager(ViewPager upViewPager) {
         ViewPageAdapter adapter = new ViewPageAdapter(getSupportFragmentManager());
         adapter.addFrag(new tabFragment(getResources().getColor(R.color.accent_material_light)), "All");
@@ -205,17 +190,13 @@ public class MainActivity extends AppCompatActivity {
              @Override
              protected Boolean doInBackground(String... params) {
                  HttpURLConnection connection = null;
-
                  BufferedReader reader= null;
                  try
                  {
                      URL url = new URL(params[0]);
-
-
                      connection = (HttpURLConnection) url.openConnection();
                      connection.connect();
                      InputStream stream = connection.getInputStream();
-
                      reader = new BufferedReader(new InputStreamReader(stream));
                      StringBuffer buffer= new StringBuffer();
                      String line = "";
@@ -225,9 +206,11 @@ public class MainActivity extends AppCompatActivity {
                      String finaljson = buffer.toString();
                      JSONArray jsonarray = new JSONArray(finaljson);
 
+                     if(jsonarray == null) {
+
+                     }
+
                      Log.d("array","is : " +jsonarray);
-
-
                      for (int i = 0; i < jsonarray.length(); i++) {
 
                          ListItems list = new ListItems();
@@ -236,6 +219,8 @@ public class MainActivity extends AppCompatActivity {
                          list.setFango_name(jsonobject.getString("name"));
                          list.setFango_location(jsonobject.getString("address"));
                          list.setFango_order_id(jsonobject.getString("order_code"));
+
+
                          Calendar c = Calendar.getInstance();
                          c.setTimeInMillis(Long.parseLong(jsonobject.getString("order_time")));
                          Date date = (Date) c.getTime();
@@ -289,8 +274,6 @@ public class MainActivity extends AppCompatActivity {
                  }
                  catch (Exception e ) {
                      Log.d("url error","error" );
-                     Toast.makeText(getApplicationContext(),"Cannot Fetch Data- Database Empty",Toast.LENGTH_LONG).show();
-
                  }
                  finally {
                      if(connection != null) {
@@ -310,12 +293,12 @@ public class MainActivity extends AppCompatActivity {
 
              @Override
              protected void onPostExecute(Boolean s) {
-//                 Log.d("listttt","is :"+listitemto.size());
-//                 recycleAdapter = new RecycleAdapter(listitemto);
-//                 recyclerView.setAdapter(recycleAdapter);
-//                 RecycleAdapter recycleAdapter = new RecycleAdapter(getApplicationContext(),R.layout.uitextlist,listitemto);
-//                 Log.d("List people " , " List : " +listitemto.size());
-//                 recyclerView.setAdapter(recycleAdapter);
+                 Log.d("listttt","is :"+listitemto.size());
+                recycleAdapter = new RecycleAdapter(listitemto);
+                 recyclerView.setAdapter(recycleAdapter);
+//             RecycleAdapter recycleAdapter = new RecycleAdapter(getApplicationContext(),R.layout.uitextlist,listitemto);
+//                Log.d("List people " , " List : " +listitemto.size());
+                recyclerView.setAdapter(recycleAdapter);
 //              recycleAdapter.notifyDataSetChanged();
                //  RecycleAdapter.notifyDataSetChanged();
  //                ListAdapter adapter = new ListAdapter(getApplicationContext(), R.layout.text_list,listitemto);

@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.example.vineet.myapplicationone.Adapters.RecycleAdapter;
+//import com.example.vineet.myapplicationone.Adapters.RecycleAdapter;
 
 /**
  * Created by Vineet on 10/1/2016.
@@ -18,7 +18,7 @@ import com.example.vineet.myapplicationone.Adapters.RecycleAdapter;
 
 public class tabFragment extends android.support.v4.app.Fragment{
     int color;
-    RecycleAdapter adapter;
+//    RecycleAdapter adapter;
     TextView v;
 
     public tabFragment() {
