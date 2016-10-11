@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_home"
+        
+
+        android:title="@string/nav_home" />
+    <item
+            android:id="@+id/nav_photos"
+
+            android:title="@string/nav_photos" />
+        <item
+            android:id="@+id/nav_movies"
+
+            android:title="@string/nav_movies" />
+
+        <item
+            android:id="@+id/bob_settings"
+            android:icon="@drawable/bob_settings"
+            android:title="Settings" />
+
+        <item
+            android:id="@+id/bob_help"
+            android:icon="@drawable/bob_help"
+            android:title="Help" />
+
+
+    <item android:title="Other">
+        <menu>
+            <item
+                android:id="@+id/nav_about_us"
+                android:title="about us" />
+            <item
+                android:id="@+id/nav_privacy_policy"
+                android:title="@string/privacy_policy" />
+        </menu>
+    </item>
+
+</menu>

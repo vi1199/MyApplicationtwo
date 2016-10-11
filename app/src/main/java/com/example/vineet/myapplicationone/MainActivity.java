@@ -40,306 +40,163 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView textView ;
     public final static String KEY_ME = "data";
-    ListView listView;
-    ListAdapter listAdapter;
     ArrayList<ListItems> listitemto;
     RecyclerView recyclerView;
     private UserDetails userDetails;
-    private ListView drawerlist;
-    ArrayAdapter<String> drawerAdapter;
     private ListItems parselist;
     RecycleAdapter recycleAdapter;
-
-
-
- //   ArrayList<String> items = new ArrayList<String>();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tabs_main_layout);
-        drawerlist = (ListView) findViewById(R.id.navList) ;
 
 
-        recyclerView = (RecyclerView) findViewById(R.id.recyclenew);
-
+        recyclerView = (RecyclerView) findViewById(R.id.frag_layout_scroll);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recycleAdapter = new RecycleAdapter(listitemto);
-        recyclerView.setAdapter(recycleAdapter);
-
-        makeParselData();
+//        makeParselData();
 
         Toolbar tool = (Toolbar) findViewById(R.id.newtoolbar);
         setSupportActionBar(tool);
 
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.new_view_pager);
-        setupViewPager(viewPager);
+//        final ViewPager viewPager = (ViewPager) findViewById(R.id.new_view_pager);
+//        setupViewPager(viewPager);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.new_tab_layout);
-        tabLayout.setupWithViewPager(viewPager);
-        listitemto = new ArrayList<ListItems>();
-//        recycleAdapter  = new RecycleAdapter(getApplicationContext(),R.layout.uitextlist,listitemto);
-//        recyclerView.setAdapter(recycleAdapter);
-
-
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-
-
-                switch (tab.getPosition()) {
-                    case 0:
-//                        tabFragment fragment = new tabFragment();
-
-                        viewPager.setCurrentItem(tab.getPosition());
-                        Log.d("Tag "," is :" +viewPager);
-                    //    RecycleAdapter newdat= new RecycleAdapter(viewPager);
-//                        Log.d("here" ," is : "+viewPager.getAdapter());
-            //            Toast.makeText(getApplicationContext(),viewPager.getAdapter(),Toast.LENGTH_LONG).show();
-
-
-
-                       // Toast.makeText(getApplicationContext(),"One",Toast.LENGTH_SHORT).show();
-                        break;
-                    case 1:
-                      //  Toast.makeText(getApplicationContext(),"Two",Toast.LENGTH_SHORT).show();
-                        break;
-                    case 2:
-                      //  Toast.makeText(getApplicationContext(),"Three",Toast.LENGTH_SHORT).show();
-                        break;
-                }
-            }
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-            }
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-            }
-        });
-
-
-
-
-
-
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-
-//                                               listView = (ListView) findViewById(R.id.list_item) ;
-//                                                  listAdapter = new ListAdapter(getApplicationContext(),R.layout.uitextlist, listitemto);
-//                                               listView.setAdapter(listAdapter);
-//                                                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-
-
-
-//                String text = parent.getItemAtPosition(position).toString();
-//                Toast.makeText(getApplication(),"selected ext is :" +text,Toast.LENGTH_LONG).show();
-//                Intent intent = new Intent(getApplicationContext(), UserDetails.class);
-//                intent.putExtra("yourItem", text);
-//                startActivity(intent);
+//        TabLayout tabLayout = (TabLayout) findViewById(R.id.new_tab_layout);
+//        tabLayout.setupWithViewPager(viewPager);
+//        listitemto = new ArrayList<ListItems>();
 //
-//                Log.d("selected items","are : " +text);
-           //    ListItems listItems = null;
-//              String[] values = new String[3];
-//                String[0]= listItems.getFango_name();
-//                String[1] = listItems.getFango_location();
-//                String[2] = listItems.getFango_order_id();
-
-//                Bundle bundle = new Bundle();
-//               bundle.putParcelable(KEY_ME, listitemto.get(position));
+//        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+//            @Override
+//            public void onTabSelected(TabLayout.Tab tab) {
+//                switch (tab.getPosition()) {
+//                    case 0:
+//                        viewPager.setCurrentItem(tab.getPosition());
+//                        Log.d("Tag ", " is :" + viewPager);
+                        // Toast.makeText(getApplicationContext(),"One",Toast.LENGTH_SHORT).show();
+//                        break;
+//                    case 1:
+//                          Toast.makeText(getApplicationContext(),"Two",Toast.LENGTH_SHORT).show();
+//                        break;
+//                    case 2:
+//                          Toast.makeText(getApplicationContext(),"Three",Toast.LENGTH_SHORT).show();
+//                        break;
+//                }
+//            }
 //
-//                Intent intent = new Intent(getApplicationContext(), UserDetails.class);
+//            @Override
+//            public void onTabUnselected(TabLayout.Tab tab) {
+//            }
 //
-//                intent.putExtras(bundle);
-//                Log.d("data","new :"+ bundle );
-//                startActivity(intent);
+//            @Override
+//            public void onTabReselected(TabLayout.Tab tab) {
 //            }
 //        });
-
         Webjons webjons = new Webjons();
         webjons.execute("http://52.66.140.142:8080/fango_live/admin/order/get/all");
-
-
     }
 
     private void makeParselData() {
-
         parselist = new ListItems();
         parselist.getFango_name();
     }
 
-    public void setupViewPager(ViewPager upViewPager) {
-        ViewPageAdapter adapter = new ViewPageAdapter(getSupportFragmentManager());
-        adapter.addFrag(new tabFragment(getResources().getColor(R.color.accent_material_light)), "All");
-        adapter.addFrag(new tabFragment(getResources().getColor(R.color.ripple_material_light)), "Current Week ");
-        adapter.addFrag(new tabFragment(getResources().getColor(R.color.button_material_dark)), "Previous Week");
-        upViewPager.setAdapter(adapter);
+//    public void setupViewPager(ViewPager upViewPager) {
+//        ViewPageAdapter adapter = new ViewPageAdapter(getSupportFragmentManager());
+//        adapter.addFrag(new tabFragment(getResources().getColor(R.color.ripple_material_light)), "All");
+//        adapter.addFrag(new tabFragment(getResources().getColor(R.color.ripple_material_light)), "Current Week ");
+//        adapter.addFrag(new tabFragment(getResources().getColor(R.color.ripple_material_light)), "Previous Week");
+//        upViewPager.setAdapter(adapter);
+//    }
 
-     //   this.upViewPager = upViewPager;
-    }
+    private class Webjons extends AsyncTask<String, Void, Boolean> {
 
+        @Override
+        protected Boolean doInBackground(String... params) {
+            HttpURLConnection connection = null;
+            BufferedReader reader = null;
+            try {
+                URL url = new URL(params[0]);
+                connection = (HttpURLConnection) url.openConnection();
+                connection.connect();
+                InputStream stream = connection.getInputStream();
+                reader = new BufferedReader(new InputStreamReader(stream));
+                StringBuffer buffer = new StringBuffer();
+                String line = "";
+                while ((line = reader.readLine()) != null) {
+                    buffer.append(line);
+                }
+                String finaljson = buffer.toString();
+                JSONArray jsonarray = new JSONArray(finaljson);
 
+                if (jsonarray == null) {
 
+                }
 
-    private class Webjons extends AsyncTask<String ,Void,Boolean> {
+                Log.d("array", "is : " + jsonarray);
+                for (int i = 0; i < jsonarray.length(); i++) {
 
-             @Override
-             protected Boolean doInBackground(String... params) {
-                 HttpURLConnection connection = null;
-                 BufferedReader reader= null;
-                 try
-                 {
-                     URL url = new URL(params[0]);
-                     connection = (HttpURLConnection) url.openConnection();
-                     connection.connect();
-                     InputStream stream = connection.getInputStream();
-                     reader = new BufferedReader(new InputStreamReader(stream));
-                     StringBuffer buffer= new StringBuffer();
-                     String line = "";
-                     while ((line = reader.readLine()) != null) {
-                         buffer.append(line);
-                     }
-                     String finaljson = buffer.toString();
-                     JSONArray jsonarray = new JSONArray(finaljson);
+                    ListItems list = new ListItems();
+                    JSONObject jsonobject = jsonarray.getJSONObject(i);
 
-                     if(jsonarray == null) {
-
-                     }
-
-                     Log.d("array","is : " +jsonarray);
-                     for (int i = 0; i < jsonarray.length(); i++) {
-
-                         ListItems list = new ListItems();
-                         JSONObject jsonobject = jsonarray.getJSONObject(i);
-
-                         list.setFango_name(jsonobject.getString("name"));
-                         list.setFango_location(jsonobject.getString("address"));
-                         list.setFango_order_id(jsonobject.getString("order_code"));
+                    list.setFango_name(jsonobject.getString("name"));
+                    list.setFango_location(jsonobject.getString("address"));
+                    list.setFango_order_id(jsonobject.getString("order_code"));
 
 
-                         Calendar c = Calendar.getInstance();
-                         c.setTimeInMillis(Long.parseLong(jsonobject.getString("order_time")));
-                         Date date = (Date) c.getTime();
-                         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss");
-                         String time = format.format(date);
-                        list.setFango_time(time);
+                    Calendar c = Calendar.getInstance();
+                    c.setTimeInMillis(Long.parseLong(jsonobject.getString("order_time")));
+                    Date date = (Date) c.getTime();
+                    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss");
+                    String time = format.format(date);
+                    list.setFango_time(time);
 
-                         list.setFango_no_of_items(jsonobject.getString("no_of_items"));
-                         list.setFango_total_amount(jsonobject.getString("total_amount"));
-                       //  list.setFango_photo(jsonobject.getString("order_photo"));
-
-
-
-
-                         listitemto.add(list);
-                         Log.d("items are ",":"+listitemto);
-
-
-                       //  Log.d("List people " , " List : " +listitemto);
-//                         String user_id = jsonobject.getString("user_id");
-//                         String order_id = jsonobject.getString("order_id");
-//                         String order_code = jsonobject.getString("order_code");
-//                         String name = jsonobject.getString("name");
-//                         String address = jsonobject.getString("address");
-//                         Log.d("userid" , "User id " +user_id);
-//                         int id = jsonobject.getInt("id");
-//                         String tyler = jsonobject.getString("order_id");
-//                         String Oscar = jsonobject.getString("name");
-//                         items.add("user : "+name);
-//                         items.add("order_id : "+ tyler);
-//                         items.add("user_id : "+user_id);
-//                         items.add("address : "+address);
-//                         items.add ("order_code : "+order_code);
- //                      Log.d("userid" , "User id " +tyler);
-                      //   return true;
+                    list.setFango_no_of_items(jsonobject.getString("no_of_items"));
+                    list.setFango_total_amount(jsonobject.getString("total_amount"));
+                    listitemto.add(list);
+                    Log.d("items are ", ":" + listitemto);
+                }
+            } catch (Exception e) {
+                Log.d("url error", "error");
+            } finally {
+                if (connection != null) {
+                    connection.disconnect();
+                }
+                try {
+                    if (reader != null) {
+                        reader.close();
                     }
-//                     JSONArray json = new JSONArray(finaljson);
-//
-//                     for(int i=0;i<json.length();i++){
-//                         HashMap<String, String> map = new HashMap<String, String>();
-//                         JSONObject e = json.getJSONObject(i);
-//
-//                         map.put("order_id",  String.valueOf(i));
-//                         map.put("name", "username:" + e.getString("name"));
-//                         map.put("user_id", "userid " +  e.getString("user_id"));
-//                         listView.add(map);
-//                     }
-//
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return false;
+        }
 
-
-                 }
-                 catch (Exception e ) {
-                     Log.d("url error","error" );
-                 }
-                 finally {
-                     if(connection != null) {
-                         connection.disconnect();
-                     }
-                     try {
-                         if (reader != null) {
-                             reader.close();
-                         }
-                     } catch (IOException e) {
-                         e.printStackTrace();
-                     }
-                 }
-                 return false;
-
-             }
-
-             @Override
-             protected void onPostExecute(Boolean s) {
-                 Log.d("listttt","is :"+listitemto.size());
-                recycleAdapter = new RecycleAdapter(listitemto);
-                 recyclerView.setAdapter(recycleAdapter);
-//             RecycleAdapter recycleAdapter = new RecycleAdapter(getApplicationContext(),R.layout.uitextlist,listitemto);
-//                Log.d("List people " , " List : " +listitemto.size());
-                recyclerView.setAdapter(recycleAdapter);
-//              recycleAdapter.notifyDataSetChanged();
-               //  RecycleAdapter.notifyDataSetChanged();
- //                ListAdapter adapter = new ListAdapter(getApplicationContext(), R.layout.text_list,listitemto);
-////                 ArrayAdapter<String> mArrayAdapter = new ArrayAdapter<String>(MainActivity.this, R.layout.text_list,items);
-//                 listView.setAdapter(mArrayAdapter);
-
-             }
-         }
+        @Override
+        protected void onPostExecute(Boolean s) {
+            Log.d("listttt", "is :" + listitemto.size());
+            recycleAdapter = new RecycleAdapter(listitemto);
+            recyclerView.setAdapter(recycleAdapter);
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_custom_toolbar, menu);
-
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
-        searchView = null;
-        if (searchView !=null) {
-            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        }
-        else
-        {
-            Log.d("meee","mm"+searchView);
-        }
+//        getMenuInflater().inflate(R.menu.menu_custom_toolbar, menu);
+//
+//        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+//        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+//        searchView = null;
+//        if (searchView != null) {
+//            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+//        } else {
+//            Log.d("meee", "mm" + searchView);
+//        }
         return true;
     }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    }
+}
 

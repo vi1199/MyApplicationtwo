@@ -18,17 +18,6 @@ public class ListItems implements Parcelable
 
 
     }
-    public ListItems (String fango_name , String fango_location, String fango_order_id,
-                      String fango_no_of_items, String fango_time, String fango_total_amount , String fango_photo) {
-        super();
-        this.fango_name = fango_name;
-        this.fango_location= fango_location;
-        this.fango_order_id= fango_order_id;
-        this.fango_time = fango_time;
-        this.fango_no_of_items= fango_no_of_items;
-        this.fango_photo = fango_photo;
-        this.fango_total_amount = fango_total_amount;
-    }
 
     public String getFango_time() {
 

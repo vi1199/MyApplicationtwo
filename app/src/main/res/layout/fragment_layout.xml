@@ -3,15 +3,12 @@
     android:id="@+id/frag_bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_material_light">
+    android:background="#ffcc80">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/frag_layout_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/textfag"/>
+
 
 </FrameLayout>
