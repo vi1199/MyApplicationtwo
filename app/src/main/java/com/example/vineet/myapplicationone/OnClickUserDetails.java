@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import com.example.vineet.myapplicationone.Models.ListItems;
 
-public class UserDetails extends AppCompatActivity {
+public class OnClickUserDetails extends AppCompatActivity {
 
     TextView name;
     TextView no_of_items;

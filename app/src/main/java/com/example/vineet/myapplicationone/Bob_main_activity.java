@@ -1,7 +1,5 @@
 package com.example.vineet.myapplicationone;
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -13,7 +11,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -42,7 +39,7 @@ public class Bob_main_activity extends AppCompatActivity {
 
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.bob_container_view, new tabFragment()).commit();
+        fragmentTransaction.replace(R.id.bob_container_view, new TabFragment()).commit();
 
         toolbar = (Toolbar) findViewById(R.id.bob_widget_toolbar);
         actionBarDrawerToggle= new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.app_name, R.string.app_name);
@@ -58,13 +55,13 @@ public class Bob_main_activity extends AppCompatActivity {
 
                 if (item.getItemId() == R.id.bob_help) {
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.bob_container_view,new tabFragment()).commit();
+                    fragmentTransaction.replace(R.id.bob_container_view,new TabFragment()).commit();
 
                 }
 
                 if (item.getItemId() == R.id.bob_settings) {
                     FragmentTransaction xfragmentTransaction = fragmentManager.beginTransaction();
-                    xfragmentTransaction.replace(R.id.bob_container_view,new tabFragment()).commit();
+                    xfragmentTransaction.replace(R.id.bob_container_view,new TabFragment()).commit();
                 }
                 return false;
             }
@@ -77,10 +74,11 @@ public class Bob_main_activity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.bob_menu, menu);
 
-        MenuItem menuItem = menu.findItem(R.id.bob_search);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
+        final MenuItem searchItem = menu.findItem(R.id.bob_search);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         searchView.setOnQueryTextListener((SearchView.OnQueryTextListener) this);
         return true;
-
     }
+
 }
+

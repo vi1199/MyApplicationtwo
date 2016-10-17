@@ -3,7 +3,7 @@ package com.example.vineet.myapplicationone.Adapters;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.example.vineet.myapplicationone.tabFragment;
+import com.example.vineet.myapplicationone.TabFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
 
 public class ViewPageAdapter extends FragmentPagerAdapter {
 
-    private final List<tabFragment> fragmentList = new ArrayList<>();
+    private final List<TabFragment> fragmentList = new ArrayList<>();
     private final List<String> fragmentTitleList = new ArrayList<>();
 
     public ViewPageAdapter(FragmentManager fm) {
@@ -31,7 +31,7 @@ public class ViewPageAdapter extends FragmentPagerAdapter {
         return fragmentList.size();
     }
 
-    public void addFrag(tabFragment fragment, String title) {
+    public void addFrag(TabFragment fragment, String title) {
         fragmentList.add(fragment);
         fragmentTitleList.add(title);
     }

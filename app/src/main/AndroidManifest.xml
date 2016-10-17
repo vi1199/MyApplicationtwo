@@ -19,6 +19,10 @@
             </intent-filter>
 
         </activity>
+        <activity android:name=".Bob_order_onclick"
+            >
+
+        </activity>
 
         <!--<activity android:name=".MainActivity">-->
             <!--<intent-filter>-->
@@ -27,7 +31,7 @@
             <!--</intent-filter>-->
 
         <!--</activity>-->
-        <!--<activity android:name=".UserDetails"></activity>-->
+        <!--<activity android:name=".OnClickUserDetails"></activity>-->
 
 
         <!--<activity android:name=".searchableContent">-->

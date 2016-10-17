@@ -1,51 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:padding="20dp"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="#EAEAEA"
+    android:elevation="3dp">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="65dp"
+        android:layout_margin="8dp"
         card_view:cardCornerRadius="2dp"
-        card_view:cardElevation="4dp">
-
-
-    <TextView
-        android:text="TextView"
+        card_view:cardElevation="3dp">
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical">
+    <TextView
         android:id="@+id/texttitle"
-        android:paddingBottom="5dp"
-        android:textSize="16dp"/>
-
-    <TextView
-        android:text="TextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="5dp"
-        android:id="@+id/textsub"
-        android:textSize="16dp"/>
-
-    <TextView
-        android:text="TextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="5dp"
-        android:id="@+id/textbody"
         android:textSize="16dp"
-       />
-
+        android:paddingLeft="16dp"
+        tools:text="Name"
+        android:paddingRight="16dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="6dp"
+        />
     <TextView
-        android:text="TextView"
+        android:id="@+id/textsub"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/texttime"
-        android:textSize="12dp"/>
+        tools:text="No Of Items"
+        android:textSize="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="6dp"/>
+    <TextView
+        android:id="@+id/textbody"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Order Id"
+        android:textSize="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="6dp"/>
+        <TextView
+            android:id="@+id/texttime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Order Id"
+            android:textSize="12dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="20dp"/>
+
+        </LinearLayout>
+
     </android.support.v7.widget.CardView>
-
-
 </LinearLayout>

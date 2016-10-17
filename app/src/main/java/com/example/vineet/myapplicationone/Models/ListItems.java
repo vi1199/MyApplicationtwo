@@ -2,7 +2,7 @@ package com.example.vineet.myapplicationone.Models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class ListItems implements Parcelable
+public class ListItems implements Comparable<ListItems>
 {
 
     String fango_name;
@@ -77,41 +77,9 @@ public class ListItems implements Parcelable
         this.fango_photo = fango_photo;
     }
 
+
     @Override
-    public int describeContents() {
+    public int compareTo(ListItems o) {
         return 0;
-    }
-
-    public static final Parcelable.Creator<ListItems> CREATOR = new Creator<ListItems>() {
-        @Override
-        public ListItems createFromParcel(Parcel source) {
-
-            ListItems parlist = new ListItems();
-            parlist.fango_name = source.readString();
-            parlist.fango_no_of_items= source.readString();
-            parlist.fango_photo = source.readString();
-            parlist.fango_order_id = source.readString();
-            parlist.fango_location = source.readString();
-            parlist.fango_time = source.readString();
-            parlist.fango_total_amount = source.readString();
-            return parlist;
-        }
-
-        @Override
-        public ListItems[] newArray(int size) {
-            return new ListItems[size];
-        }
-    };
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(fango_name);
-        dest.writeString(fango_order_id);
-        dest.writeString(fango_location);
-        dest.writeString(fango_no_of_items);
-        dest.writeString(fango_photo);
-        dest.writeString(fango_time);
-        dest.writeString(fango_total_amount);
-
     }
 }

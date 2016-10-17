@@ -22,7 +22,7 @@ import com.example.vineet.myapplicationone.Tab_Fragments.Older_Fragment;
 /**
  * Created by Vineet on 10/1/2016.
  */
-public class tabFragment extends android.support.v4.app.Fragment {
+public class TabFragment extends android.support.v4.app.Fragment {
     public static TabLayout tabLayout;
     public static ViewPager viewPager;
     public static int items = 3;

@@ -1,27 +1,15 @@
 package com.example.vineet.myapplicationone;
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.os.AsyncTask;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.vineet.myapplicationone.Adapters.ListAdapter;
 import com.example.vineet.myapplicationone.Adapters.RecycleAdapter;
-import com.example.vineet.myapplicationone.Adapters.ViewPageAdapter;
 import com.example.vineet.myapplicationone.Models.ListItems;
 
 import org.json.JSONArray;
@@ -43,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     public final static String KEY_ME = "data";
     ArrayList<ListItems> listitemto;
     RecyclerView recyclerView;
-    private UserDetails userDetails;
+    private OnClickUserDetails userDetails;
     private ListItems parselist;
     RecycleAdapter recycleAdapter;
 
@@ -105,9 +93,9 @@ public class MainActivity extends AppCompatActivity {
 
 //    public void setupViewPager(ViewPager upViewPager) {
 //        ViewPageAdapter adapter = new ViewPageAdapter(getSupportFragmentManager());
-//        adapter.addFrag(new tabFragment(getResources().getColor(R.color.ripple_material_light)), "All");
-//        adapter.addFrag(new tabFragment(getResources().getColor(R.color.ripple_material_light)), "Current Week ");
-//        adapter.addFrag(new tabFragment(getResources().getColor(R.color.ripple_material_light)), "Previous Week");
+//        adapter.addFrag(new TabFragment(getResources().getColor(R.color.ripple_material_light)), "All");
+//        adapter.addFrag(new TabFragment(getResources().getColor(R.color.ripple_material_light)), "Current Week ");
+//        adapter.addFrag(new TabFragment(getResources().getColor(R.color.ripple_material_light)), "Previous Week");
 //        upViewPager.setAdapter(adapter);
 //    }
 

@@ -6,15 +6,20 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.vineet.myapplicationone.Adapters.RecycleAdapter;
+import com.example.vineet.myapplicationone.Bob_order_onclick;
 import com.example.vineet.myapplicationone.Models.ListItems;
 import com.example.vineet.myapplicationone.R;
 
@@ -47,7 +52,7 @@ public class AllOrders_Fragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View frag_view = inflater.inflate(R.layout.bob_allorders_fragment,null);
+        View frag_view = inflater.inflate(R.layout.bob_allorders_fragment, null);
         listitemto = new ArrayList<ListItems>();
 
         Fango_url asyncTask = new Fango_url();
@@ -55,29 +60,22 @@ public class AllOrders_Fragment extends Fragment {
         recyclerView = (RecyclerView) frag_view.findViewById(R.id.bob_recycle_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-//        layoutManager = new LinearLayoutManager(getActivity());
+        ItemClickSupport.addTo(recyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+                    @Override
+                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                        Intent intent = new Intent(v.getContext(),Bob_order_onclick.class);
+                        intent.putExtra("key", listitemto.get(position).getFango_name());
+                        intent.putExtra("key2",listitemto.get(position).getFango_order_id());
+                        startActivity(intent);
+                    }
+                });
 
-
-
-
-
-        new RecyclerItemClickListener(getContext(), recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
-            @Override public void onItemClick(View view, int position) {
-                Bundle bundle = new Bundle();
-                // do whateverTo
-             //   Toast.makeText(getActivity(),)
-            }
-
-            @Override public void onLongItemClick(View view, int position) {
-                // do whatever
-            }
-        });
         return frag_view;
 
     }
 
 
-    public class Fango_url extends AsyncTask<String, Void ,Boolean> {
+    public class Fango_url extends AsyncTask<String, Void, Boolean> {
 
         @Override
         protected Boolean doInBackground(String... params) {
@@ -91,30 +89,36 @@ public class AllOrders_Fragment extends Fragment {
                 reader = new BufferedReader(new InputStreamReader(stream));
                 StringBuffer buffer = new StringBuffer();
                 String line = "";
-                while((line = reader.readLine())!=null){
+                while ((line = reader.readLine()) != null) {
                     buffer.append(line);
                 }
                 String finaljson = buffer.toString();
                 JSONArray jArray = new JSONArray(finaljson);
-                if (jArray ==null) {
+                if (jArray == null) {
 
                 }
-                for (int i=0; i<jArray.length();i++){
+                for (int i = 0; i < jArray.length(); i++) {
                     ListItems listItems = new ListItems();
                     JSONObject jObject = jArray.getJSONObject(i);
                     listItems.setFango_name(jObject.getString("name"));
                     listItems.setFango_location(jObject.getString("address"));
-                    listItems.setFango_order_id(jObject.getString("order_code"));
+                    listItems.setFango_order_id(jObject.getString("order_id"));
                     listItems.setFango_no_of_items(jObject.getString("no_of_items"));
                     listItems.setFango_total_amount(jObject.getString("total_amount"));
+
 
                     Calendar c = Calendar.getInstance();
                     c.setTimeInMillis(Long.parseLong(jObject.getString("order_time")));
                     Date date = (Date) c.getTime();
                     SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss");
                     String time = format.format(date);
+
+
+
+                    date.compareTo(date);
                     listItems.setFango_time(time);
-                    Log.d("list ",":"+listItems);
+
+                    Log.d("list ", ":" + listItems);
 
                     listitemto.add(listItems);
 
@@ -123,9 +127,8 @@ public class AllOrders_Fragment extends Fragment {
 
             } catch (Exception e) {
                 e.printStackTrace();
-                Log.d("Error is ", ": "+e);
-            }
-            finally {
+                Log.d("Error is ", ": " + e);
+            } finally {
                 if (connection != null) {
                     connection.disconnect();
                 }
@@ -135,12 +138,13 @@ public class AllOrders_Fragment extends Fragment {
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Log.d("Another url error"," :" +e);
+                    Log.d("Another url error", " :" + e);
                 }
 
             }
             return false;
         }
+
         @Override
         protected void onPostExecute(Boolean s) {
             Log.d("listttt", "isssss :" + listitemto.size());

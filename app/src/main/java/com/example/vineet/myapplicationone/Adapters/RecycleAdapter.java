@@ -1,5 +1,6 @@
 package com.example.vineet.myapplicationone.Adapters;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHolder> {
 
     private ArrayList<ListItems> orderList;
+    ListItems fan;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView name, address, id,time;
@@ -45,14 +47,13 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHo
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        ListItems fan;
+
             fan = orderList.get(position);
             holder.name.setText("Name : " + fan.getFango_name());
             holder.address.setText("Address : " + fan.getFango_location());
             holder.id.setText("Order Id : " + fan.getFango_order_id());
             holder.time.setText(fan.getFango_time());
             Log.d("holder ", " is :" + orderList);
-
     }
 
     @Override
@@ -61,4 +62,5 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHo
         return orderList.size();
 
     }
+
 }
