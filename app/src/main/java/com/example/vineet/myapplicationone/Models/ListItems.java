@@ -12,6 +12,9 @@ public class ListItems implements Comparable<ListItems>
     String fango_time;
     String fango_total_amount;
     String fango_photo;
+    String fango_fango_id;
+    String fango_city;
+    String fango_state;
 
 
     public ListItems (){
@@ -77,6 +80,29 @@ public class ListItems implements Comparable<ListItems>
         this.fango_photo = fango_photo;
     }
 
+    public String getFango_fango_id() {
+        return fango_fango_id;
+    }
+
+    public String getFango_city() {
+        return fango_city;
+    }
+
+    public String getFango_state() {
+        return fango_state;
+    }
+
+    public void setFango_state(String fango_state) {
+        this.fango_state = fango_state;
+    }
+
+    public void setFango_city(String fango_city) {
+        this.fango_city = fango_city;
+    }
+
+    public void setFango_fango_id(String fango_fango_id) {
+        this.fango_fango_id = fango_fango_id;
+    }
 
     @Override
     public int compareTo(ListItems o) {

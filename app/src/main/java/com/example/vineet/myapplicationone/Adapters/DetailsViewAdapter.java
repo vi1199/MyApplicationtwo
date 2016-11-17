@@ -1,5 +1,7 @@
 package com.example.vineet.myapplicationone.Adapters;
 
+import android.content.Context;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,8 +10,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.vineet.myapplicationone.Bob_order_onclick;
 import com.example.vineet.myapplicationone.Models.Details_with_photos;
 import com.example.vineet.myapplicationone.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -22,23 +26,26 @@ public class DetailsViewAdapter extends RecyclerView.Adapter<DetailsViewAdapter.
     Details_with_photos det;
 
 
+
     public class DetailViewHolder extends RecyclerView.ViewHolder {
 
         public TextView Nname, no_ofitems,orderCode, paise ,addr, times,prize,colors,sizes;
         public ImageView img;
 
         public DetailViewHolder(View itemView) {
+
             super(itemView);
-            Nname = (TextView) itemView.findViewById(R.id.bob_details_name);
-            no_ofitems= (TextView)itemView.findViewById(R.id.bob_details_no_of_items);
-            orderCode =(TextView) itemView.findViewById(R.id.bob_details_order_id);
-            paise = (TextView)itemView.findViewById(R.id.bob_details_amount);
-            addr = (TextView)itemView.findViewById(R.id.bob_details_address);
-            times =(TextView)itemView.findViewById(R.id.bob_details_date);
-//            img = (ImageView) itemView.findViewById(R.id.bob_details_image);
+//            Nname = (TextView) itemView.findViewById(R.id.bob_details_name);
+//           no_ofitems= (TextView)itemView.findViewById(R.id.bob_details_no_of_items);
+//            orderCode =(TextView) itemView.findViewById(R.id.bob_details_order_id);
+//            paise = (TextView)itemView.findViewById(R.id.bob_details_amount);
+//            addr = (TextView)itemView.findViewById(R.id.bob_details_address);
+//            times =(TextView)itemView.findViewById(R.id.bob_details_date);
+            img = (ImageView) itemView.findViewById(R.id.bob_details_image);
             prize=(TextView)itemView.findViewById(R.id.bob_details_Prize);
-            colors = (TextView)itemView.findViewById(R.id.bob_details_color);
+//            colors = (TextView)itemView.findViewById(R.id.bob_details_color);
             sizes = (TextView)itemView.findViewById(R.id.bob_details_size);
+
 
 
         }
@@ -63,9 +70,11 @@ public class DetailsViewAdapter extends RecyclerView.Adapter<DetailsViewAdapter.
 //        holder.orderCode.setText("Order Code :"+det.getDetails_order_code());
 //        holder.addr.setText("Address :"+det.getDetails_address());
 //        holder.times.setText(""+det.getDetails_time());
-        holder.no_ofitems.setText("Size :"+det.getDetails_size());
-        holder.addr.setText("Color :"+det.getDetails_opid_color());
-        holder.orderCode.setText("prize :"+det.getDetails_price());
+        holder.sizes.setText("Size : "+det.getDetails_size());
+//        holder.colors.setText("Color : "+det.getDetails_opid_color());
+        holder.prize.setText("Prize : Rs"+det.getDetails_price());
+//        holder.img.setImageResource(details_with_photoses.get(position));
+        Picasso.with(Bob_order_onclick.contextme).load(det.getDetails_product_pic_url()).into(holder.img);
         Log.d("holder ","is:"+holder);
 //        holder.img.setImageResource(Integer.parseInt(""+det.getDetails_product_pic_url()));
 

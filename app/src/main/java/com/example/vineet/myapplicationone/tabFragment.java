@@ -75,7 +75,7 @@ public class TabFragment extends android.support.v4.app.Fragment {
                 case 1:
                     return "This Week";
                 case 2:
-                    return "Last Week";
+                    return "Older";
             }
             return null;
         }

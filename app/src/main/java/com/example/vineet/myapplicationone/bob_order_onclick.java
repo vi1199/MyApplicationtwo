@@ -1,12 +1,15 @@
 package com.example.vineet.myapplicationone;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -36,37 +39,54 @@ import java.util.Date;
  */
 
 public class Bob_order_onclick extends AppCompatActivity {
+    public static Context contextme ;
     ArrayList<Details_with_photos> returnlist;
     DetailsViewAdapter returnAdapter;
     RecyclerView recyclerView;
-    TextView name, id,address_, amount,no_of_items;
+    TextView name, id,address_, amount,no_of_items, cityy;
     ProgressDialog progressDialog;
+    Toolbar toolbar;
+    ActionBarDrawerToggle actionBarDrawerToggle;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.bob_order_details);
-
-        LinearLayoutManager layoutManager
-                = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.bob_recycle_view);
-        recyclerView.setLayoutManager(layoutManager);
+        setContentView(R.layout.bob_orders_scroll_recycle);
+        toolbar = (Toolbar) findViewById(R.id.bob_widget_toolbar_order);
 
 
         name = (TextView)findViewById(R.id.bob_details_name);
         id= (TextView)findViewById(R.id.bob_details_order_id);
         address_ = (TextView)findViewById(R.id.bob_details_address);
-        amount = (TextView)findViewById(R.id.bob_details_amount);
         no_of_items = (TextView) findViewById(R.id.bob_details_no_of_items);
+        amount = (TextView)findViewById(R.id.bob_details_amount);
+        cityy = (TextView)findViewById(R.id.bob_details_city);
+
+//        recyclerView = (RecyclerView)findViewById(R.id.bob_recycle_view);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        LinearLayoutManager layoutManager
+                = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+
+        recyclerView = (RecyclerView) findViewById(R.id.bob_recycle_view_horscroll);
+        recyclerView.setLayoutManager(layoutManager);
+
+
         returnlist = new ArrayList<Details_with_photos>();
 
         Intent in = getIntent();
         String nameMe= in.getStringExtra("key");
         String orderId = in.getStringExtra("key2");
-        name.setText(nameMe);
-        id.setText(orderId);
+        String total_amount = in.getStringExtra("key3");
+        String noOfItem = in.getStringExtra("key4");
+        String city = in.getStringExtra("key5");
+        name.setText(""+nameMe);
+        id.setText("Order Id : "+orderId);
+        amount.setText("Amount : "+total_amount);
+        no_of_items.setText("No Of Items : "+noOfItem);
+        cityy.setText("City : "+city);
 
         OrderJson orderJson = new OrderJson();
         orderJson.execute("http://52.66.140.142:8080/fango_live/admin/order/get?order_id="+orderId);
@@ -102,9 +122,10 @@ public class Bob_order_onclick extends AppCompatActivity {
                     Log.d("array is ",":"+jsonObject);
                 for (int i=0;i<jsonArray.length();i++){
                     JSONObject cur = jsonArray.getJSONObject(i);
-                    details.setDetails_opid_color(cur.getString("color"));
+                    details.setDetails_opid_color(cur.getString("color_name"));
                     details.setDetails_size(cur.getString("size"));
                     details.setDetails_price(cur.getString("price"));
+                    details.setDetails_product_pic_url(cur.getString("product_pic_url"));
                     returnlist.add(details);
 
                     Log.d("op id","is:"+details);
@@ -168,6 +189,7 @@ public class Bob_order_onclick extends AppCompatActivity {
         protected void onPostExecute(Boolean s) {
             Log.d("listttt", "isssss :" + returnlist.size());
             returnAdapter = new DetailsViewAdapter(returnlist);
+            contextme= getApplication();
             recyclerView.setAdapter(returnAdapter);
         }
     }

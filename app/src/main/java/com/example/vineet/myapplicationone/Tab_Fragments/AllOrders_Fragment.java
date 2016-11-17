@@ -1,5 +1,6 @@
 package com.example.vineet.myapplicationone.Tab_Fragments;
 
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -38,6 +39,8 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 
 /**
@@ -58,7 +61,9 @@ public class AllOrders_Fragment extends Fragment {
         Fango_url asyncTask = new Fango_url();
         asyncTask.execute("http://52.66.140.142:8080/fango_live/admin/order/get/all");
         recyclerView = (RecyclerView) frag_view.findViewById(R.id.bob_recycle_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        LinearLayoutManager lastlayoutmanager = new LinearLayoutManager(getContext());
+        lastlayoutmanager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(lastlayoutmanager);
 
         ItemClickSupport.addTo(recyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
                     @Override
@@ -66,9 +71,19 @@ public class AllOrders_Fragment extends Fragment {
                         Intent intent = new Intent(v.getContext(),Bob_order_onclick.class);
                         intent.putExtra("key", listitemto.get(position).getFango_name());
                         intent.putExtra("key2",listitemto.get(position).getFango_order_id());
+                        intent.putExtra("key3",listitemto.get(position).getFango_total_amount());
+                        intent.putExtra("key4",listitemto.get(position).getFango_no_of_items());
+                        intent.putExtra("key5",listitemto.get(position).getFango_city());
                         startActivity(intent);
                     }
                 });
+
+        recyclerView.setOnScrollListener(new ScrollListener(lastlayoutmanager) {
+            @Override
+            public void onLoadMore(int current_page) {
+
+            }
+        });
 
         return frag_view;
 
@@ -101,32 +116,43 @@ public class AllOrders_Fragment extends Fragment {
                     ListItems listItems = new ListItems();
                     JSONObject jObject = jArray.getJSONObject(i);
                     listItems.setFango_name(jObject.getString("name"));
-                    listItems.setFango_location(jObject.getString("address"));
+                    listItems.setFango_fango_id(jObject.getString("order_code"));
                     listItems.setFango_order_id(jObject.getString("order_id"));
                     listItems.setFango_no_of_items(jObject.getString("no_of_items"));
                     listItems.setFango_total_amount(jObject.getString("total_amount"));
+                    listItems.setFango_city(jObject.getString("city"));
 
 
                     Calendar c = Calendar.getInstance();
                     c.setTimeInMillis(Long.parseLong(jObject.getString("order_time")));
-                    Date date = (Date) c.getTime();
+                    Date date =c.getTime();
                     SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss");
                     String time = format.format(date);
 
 
 
-                    date.compareTo(date);
-                    listItems.setFango_time(time);
+//                    listItems.setFango_time(time);
 
-                    Log.d("list ", ":" + listItems);
+//                    Log.d("list ", ":" + listItems);
+//                    Collections.sort(listitemto);
+//                    Calendar calendar = Calendar.getInstance();
+//                    calendar.setTime(date);
+//                    calendar.add(Calendar.DAY_OF_WEEK,-7);
+//                    Date newdate = calendar.getTime();
+                    listItems.setFango_time(String.valueOf(time));
 
                     listitemto.add(listItems);
+
+
+//                    Log.d("date is ",":"+newdate);
+
 
 
                 }
 
             } catch (Exception e) {
                 e.printStackTrace();
+//                Toast.makeText(getActivity()," UnAble to fetch data, check Connection", Toast.LENGTH_LONG).show();
                 Log.d("Error is ", ": " + e);
             } finally {
                 if (connection != null) {
@@ -138,6 +164,7 @@ public class AllOrders_Fragment extends Fragment {
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
+                    Toast.makeText(getActivity(),"Server Offline , Try After Some Time", Toast.LENGTH_LONG).show();
                     Log.d("Another url error", " :" + e);
                 }
 
