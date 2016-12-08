@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHolder> {
 
-    private ArrayList<ListItems> orderList;
+     ArrayList<ListItems> orderList;
     ListItems fan;
     private Loader.OnLoadCompleteListener onLoadCompleteListener;
 
@@ -68,6 +68,12 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHo
       //  Log.d("list ","is:"+orderList.size());
         return orderList.size();
 
+    }
+
+    public void setFilter (ArrayList<ListItems> filterlist) {
+        orderList = new ArrayList<>();
+        orderList.addAll(filterlist);
+        notifyDataSetChanged();
     }
 
 

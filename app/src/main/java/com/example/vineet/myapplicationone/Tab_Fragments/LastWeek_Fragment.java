@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import com.example.vineet.myapplicationone.Adapters.OneWeekAdapter;
 import com.example.vineet.myapplicationone.Adapters.RecycleAdapter;
 import com.example.vineet.myapplicationone.Bob_order_onclick;
+import com.example.vineet.myapplicationone.CallingConstants.ConstantsCall;
 import com.example.vineet.myapplicationone.Models.ListItems;
 import com.example.vineet.myapplicationone.R;
 
@@ -44,13 +46,23 @@ public class LastWeek_Fragment extends Fragment {
     ArrayList<ListItems> listitemto;
     OneWeekAdapter recycleAdapter;
     RecyclerView recyclerView;
+    SwipeRefreshLayout swipeRefreshLayout;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View frag_view = inflater.inflate(R.layout.bob_allorders_fragment,null);
         listitemto = new ArrayList<ListItems>();
+        swipeRefreshLayout = (SwipeRefreshLayout) frag_view.findViewById(R.id.swipeme);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Fango_last asyncTask = new Fango_last();
+                asyncTask.execute(new ConstantsCall().getAll);
+            }
+        });
 
         Fango_last asyncTask = new Fango_last();
-        asyncTask.execute("http://52.66.140.142:8080/fango_live/admin/order/get/all");
+        asyncTask.execute(new ConstantsCall().getAll);
+
         recyclerView = (RecyclerView) frag_view.findViewById(R.id.bob_recycle_view);
         final LinearLayoutManager lastlayoutmanager = new LinearLayoutManager(getContext());
         lastlayoutmanager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -76,8 +88,11 @@ public class LastWeek_Fragment extends Fragment {
 
     public class Fango_last extends AsyncTask<String, Void, Boolean> {
 
+
+
         @Override
         protected Boolean doInBackground(String... params) {
+
             HttpURLConnection connection = null;
             BufferedReader reader = null;
             try {
@@ -204,6 +219,9 @@ public class LastWeek_Fragment extends Fragment {
 
         @Override
         protected void onPostExecute(Boolean s) {
+            if (swipeRefreshLayout.isRefreshing()) {
+                swipeRefreshLayout.setRefreshing(false);
+            }
             Log.d("Misttlistttt", "isssss :" + listitemto.size());
                 Log.d("Misttlistttt", "isssss :" + listitemto.size());
                 recycleAdapter = new OneWeekAdapter(listitemto);

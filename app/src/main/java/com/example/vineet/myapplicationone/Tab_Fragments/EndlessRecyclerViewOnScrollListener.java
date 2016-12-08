@@ -1,15 +1,14 @@
 package com.example.vineet.myapplicationone.Tab_Fragments;
 
+/**
+ * Created by Vineet on 11/19/2016.
+ */
+
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-/**
- * Created by Vineet on 10/20/2016.
- */
-
-public abstract class ScrollListener extends RecyclerView.OnScrollListener {
-
-    public static String TAG = ScrollListener.class.getSimpleName();
+abstract class EndlessRecyclerViewOnScrollListener extends RecyclerView.OnScrollListener {
+    public static String TAG = EndlessRecyclerViewOnScrollListener.class.getSimpleName();
 
     private int previousTotal = 0; // The total number of items in the dataset after the last load
     private boolean loading = true; // True if we are still waiting for the last set of data to load.
@@ -20,7 +19,7 @@ public abstract class ScrollListener extends RecyclerView.OnScrollListener {
 
     private LinearLayoutManager mLinearLayoutManager;
 
-    public ScrollListener(LinearLayoutManager linearLayoutManager) {
+    public EndlessRecyclerViewOnScrollListener(LinearLayoutManager linearLayoutManager) {
         this.mLinearLayoutManager = linearLayoutManager;
     }
 
@@ -38,7 +37,8 @@ public abstract class ScrollListener extends RecyclerView.OnScrollListener {
                 previousTotal = totalItemCount;
             }
         }
-        if (!loading && (totalItemCount - visibleItemCount)<= (firstVisibleItem + visibleThreshold)) {
+        if (!loading && (totalItemCount - visibleItemCount)
+                <= (firstVisibleItem + visibleThreshold)) {
             // End has been reached
 
             // Do something
@@ -52,5 +52,3 @@ public abstract class ScrollListener extends RecyclerView.OnScrollListener {
 
     public abstract void onLoadMore(int current_page);
 }
-
-

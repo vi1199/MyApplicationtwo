@@ -5,12 +5,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.vineet.myapplicationone.Adapters.DetailsViewAdapter;
@@ -44,18 +52,23 @@ public class Bob_order_onclick extends AppCompatActivity {
     DetailsViewAdapter returnAdapter;
     RecyclerView recyclerView;
     TextView name, id,address_, amount,no_of_items, cityy;
+    ImageView share;
     ProgressDialog progressDialog;
     Toolbar toolbar;
     ActionBarDrawerToggle actionBarDrawerToggle;
 
 
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bob_orders_scroll_recycle);
         toolbar = (Toolbar) findViewById(R.id.bob_widget_toolbar_order);
 
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         name = (TextView)findViewById(R.id.bob_details_name);
         id= (TextView)findViewById(R.id.bob_details_order_id);
@@ -63,6 +76,9 @@ public class Bob_order_onclick extends AppCompatActivity {
         no_of_items = (TextView) findViewById(R.id.bob_details_no_of_items);
         amount = (TextView)findViewById(R.id.bob_details_amount);
         cityy = (TextView)findViewById(R.id.bob_details_city);
+        share = (ImageView)findViewById(R.id.bob_details_image);
+
+
 
 //        recyclerView = (RecyclerView)findViewById(R.id.bob_recycle_view);
 //        recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -88,8 +104,23 @@ public class Bob_order_onclick extends AppCompatActivity {
         no_of_items.setText("No Of Items : "+noOfItem);
         cityy.setText("City : "+city);
 
+        final String send_Data = nameMe +"\r\nOrder id :"+ orderId +"\r\nAmount :"+ total_amount +"\r\nCity :"+ city +"\r\n  ~ FANGO ORDERS ~";
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT,send_Data);
+                sendIntent.setType("text/plain");
+                Intent.createChooser(sendIntent,"Share via");
+                startActivity(sendIntent);
+            }
+        });
+
+
         OrderJson orderJson = new OrderJson();
-        orderJson.execute("http://52.66.140.142:8080/fango_live/admin/order/get?order_id="+orderId);
+        final int stage = 2;
+        orderJson.execute("http://52.66.140.142:8080/fango_live/admin/order/get?order_id="+orderId+"&stage="+stage);
     }
 
     public class OrderJson extends AsyncTask<String,Void,Boolean> {
@@ -126,8 +157,9 @@ public class Bob_order_onclick extends AppCompatActivity {
                     details.setDetails_size(cur.getString("size"));
                     details.setDetails_price(cur.getString("price"));
                     details.setDetails_product_pic_url(cur.getString("product_pic_url"));
-                    returnlist.add(details);
 
+                    returnlist.add(details);
+                    Log.d("product ","ut=rl -------------"+details.getDetails_product_pic_url());
                     Log.d("op id","is:"+details);
                 }
 
@@ -192,6 +224,52 @@ public class Bob_order_onclick extends AppCompatActivity {
             contextme= getApplication();
             recyclerView.setAdapter(returnAdapter);
         }
+    }
+
+    ShareActionProvider mShareActionProvider;
+
+
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.detailsmenu, menu);
+//        MenuItem searchItem = menu.findItem(R.id.sharebob);
+//        mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(searchItem);
+//
+//
+//        mShareActionProvider.setShareIntent(getshareintent());
+//
+//        return true;
+//    }
+//
+//    public Intent getshareintent (){
+//        Intent intent = new Intent(Intent.ACTION_SEND);
+//        intent.setType("text/plain");
+//        intent.putExtra(Intent.EXTRA_SUBJECT, "SUBJECT");
+//        intent.putExtra(Intent.EXTRA_TEXT, "Extra Text");
+//        return intent;
+//    }
+//
+//
+    ShareActionProvider provider;
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            case R.id.sharebob:
+                doShare();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+    public void doShare(){
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, "This is a message for you");
+        provider.setShareIntent(intent);
     }
 }
 

@@ -32,6 +32,7 @@ public class TabFragment extends android.support.v4.app.Fragment {
         View bob_view = inflater.inflate(R.layout.bob_tab_layout,null);
         tabLayout = (TabLayout) bob_view.findViewById(R.id.bob_tab_id);
         viewPager = (ViewPager)bob_view.findViewById(R.id.bob_view_pager_id);
+        tabLayout.setupWithViewPager(viewPager);
 
         viewPager.setAdapter(new Adap(getChildFragmentManager()));
 

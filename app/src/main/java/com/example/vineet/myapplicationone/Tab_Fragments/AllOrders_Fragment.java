@@ -1,46 +1,38 @@
 package com.example.vineet.myapplicationone.Tab_Fragments;
 
-import android.app.NotificationManager;
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.MenuItemCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.vineet.myapplicationone.Adapters.RecycleAdapter;
+import com.example.vineet.myapplicationone.Bob_main_activity;
 import com.example.vineet.myapplicationone.Bob_order_onclick;
+import com.example.vineet.myapplicationone.CallingConstants.ConstantsCall;
 import com.example.vineet.myapplicationone.Models.ListItems;
 import com.example.vineet.myapplicationone.R;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 
 /**
@@ -51,19 +43,43 @@ public class AllOrders_Fragment extends Fragment {
     ArrayList<ListItems> listitemto;
     RecycleAdapter recycleAdapter;
     RecyclerView recyclerView;
+    SwipeRefreshLayout swipeRefreshLayout;
+
 //    RecyclerView.LayoutManager layoutManager;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View frag_view = inflater.inflate(R.layout.bob_allorders_fragment, null);
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        final View frag_view = inflater.inflate(R.layout.bob_allorders_fragment, null);
         listitemto = new ArrayList<ListItems>();
 
+
+
+         swipeRefreshLayout = (SwipeRefreshLayout) frag_view.findViewById(R.id.swipeme);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Fango_url asyncTask = new Fango_url();
+
+
+                    asyncTask.execute(new ConstantsCall().getAll);
+
+            }
+        });
+
         Fango_url asyncTask = new Fango_url();
-        asyncTask.execute("http://52.66.140.142:8080/fango_live/admin/order/get/all");
+        asyncTask.execute(new ConstantsCall().getAll);
         recyclerView = (RecyclerView) frag_view.findViewById(R.id.bob_recycle_view);
         LinearLayoutManager lastlayoutmanager = new LinearLayoutManager(getContext());
-        lastlayoutmanager.setOrientation(LinearLayoutManager.VERTICAL);
+//        lastlayoutmanager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(lastlayoutmanager);
+        recyclerView.setOnScrollListener(new EndlessRecyclerViewOnScrollListener(lastlayoutmanager) {
+            @Override
+            public void onLoadMore(int current_page) {
+                View All = inflater.inflate(R.layout.progress_bar,null);
+                Toast.makeText(getContext(),"this is it ",Toast.LENGTH_LONG).show();
+            }
+        });
+
 
         ItemClickSupport.addTo(recyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
                     @Override
@@ -78,20 +94,17 @@ public class AllOrders_Fragment extends Fragment {
                     }
                 });
 
-        recyclerView.setOnScrollListener(new ScrollListener(lastlayoutmanager) {
-            @Override
-            public void onLoadMore(int current_page) {
-
-            }
-        });
-
         return frag_view;
 
     }
 
 
+
     public class Fango_url extends AsyncTask<String, Void, Boolean> {
 
+
+
+        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         @Override
         protected Boolean doInBackground(String... params) {
             HttpURLConnection connection = null;
@@ -112,9 +125,13 @@ public class AllOrders_Fragment extends Fragment {
                 if (jArray == null) {
 
                 }
+
                 for (int i = 0; i < jArray.length(); i++) {
                     ListItems listItems = new ListItems();
                     JSONObject jObject = jArray.getJSONObject(i);
+                    JSONObject FirstArray = jArray.getJSONObject(0);
+                    String topFirst = FirstArray.toString();
+
                     listItems.setFango_name(jObject.getString("name"));
                     listItems.setFango_fango_id(jObject.getString("order_code"));
                     listItems.setFango_order_id(jObject.getString("order_id"));
@@ -143,11 +160,7 @@ public class AllOrders_Fragment extends Fragment {
 
                     listitemto.add(listItems);
 
-
-//                    Log.d("date is ",":"+newdate);
-
-
-
+//                    Log.d("list items are ",":"+listitemto);
                 }
 
             } catch (Exception e) {
@@ -174,10 +187,18 @@ public class AllOrders_Fragment extends Fragment {
 
         @Override
         protected void onPostExecute(Boolean s) {
-            Log.d("listttt", "isssss :" + listitemto.size());
+            if (swipeRefreshLayout.isRefreshing()) {
+                swipeRefreshLayout.setRefreshing(false);
+            }
+//            Log.d("listttt", "isssss :" + listitemto.size());
             recycleAdapter = new RecycleAdapter(listitemto);
             recyclerView.setAdapter(recycleAdapter);
+
 //            recycleAdapter.notifyDataSetChanged();
+
+
+
+
 
         }
     }

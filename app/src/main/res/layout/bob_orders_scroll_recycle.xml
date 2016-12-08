@@ -23,9 +23,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/bob_widget_toolbar_order"
         android:background="@color/colorAccent"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:title=" Details "
-        app:menu="@menu/bob_menu"
+        app:menu="@menu/detailsmenu"
         >
 
     </android.support.v7.widget.Toolbar>
@@ -53,7 +52,7 @@
             >
             <TextView
                 android:id="@+id/bob_details_name"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="24sp"
                 android:paddingLeft="12dp"
@@ -98,15 +97,23 @@
                 android:paddingLeft="12dp"
                 android:paddingRight="16dp"
                 android:paddingBottom="5dp"/>
-            <TextView
-                android:id="@+id/bob_details_date"
-                android:layout_width="match_parent"
+
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="time"
-                android:textSize="16dp"
+                android:orientation="vertical"
+                android:gravity="right"
+                >
+            <ImageView
+                android:id="@+id/bob_details_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:background="@mipmap/shareme"
                 android:paddingLeft="12dp"
                 android:paddingRight="16dp"
                 android:paddingBottom="12dp"/>
+            </LinearLayout>
 
         </LinearLayout>
 

@@ -14,6 +14,7 @@ import com.example.vineet.myapplicationone.Bob_order_onclick;
 import com.example.vineet.myapplicationone.Models.Details_with_photos;
 import com.example.vineet.myapplicationone.R;
 import com.squareup.picasso.Picasso;
+//import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -75,7 +76,7 @@ public class DetailsViewAdapter extends RecyclerView.Adapter<DetailsViewAdapter.
         holder.prize.setText("Prize : Rs"+det.getDetails_price());
 //        holder.img.setImageResource(details_with_photoses.get(position));
         Picasso.with(Bob_order_onclick.contextme).load(det.getDetails_product_pic_url()).into(holder.img);
-        Log.d("holder ","is:"+holder);
+//        Log.d("holder ","is:"+holder);
 //        holder.img.setImageResource(Integer.parseInt(""+det.getDetails_product_pic_url()));
 
     }

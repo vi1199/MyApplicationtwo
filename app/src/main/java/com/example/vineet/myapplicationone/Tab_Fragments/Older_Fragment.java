@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import com.example.vineet.myapplicationone.Adapters.LastFaragmentAdapter;
 import com.example.vineet.myapplicationone.Adapters.RecycleAdapter;
 import com.example.vineet.myapplicationone.Bob_order_onclick;
+import com.example.vineet.myapplicationone.CallingConstants.ConstantsCall;
 import com.example.vineet.myapplicationone.Models.ListItems;
 import com.example.vineet.myapplicationone.R;
 
@@ -40,15 +42,24 @@ public class Older_Fragment extends Fragment {
     ArrayList<ListItems> listitemto;
     LastFaragmentAdapter recycleAdapter;
     RecyclerView recyclerView;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View old_view= inflater.inflate(R.layout.bob_allorders_fragment,null);
 
         listitemto = new ArrayList<ListItems>();
+        swipeRefreshLayout = (SwipeRefreshLayout) old_view.findViewById(R.id.swipeme);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Fango_older asyncTask = new Fango_older();
+                asyncTask.execute(new ConstantsCall().getAll);
+            }
+        });
 
         Fango_older asyncTask = new Fango_older();
-        asyncTask.execute("http://52.66.140.142:8080/fango_live/admin/order/get/all");
+        asyncTask.execute(new ConstantsCall().getAll);
         recyclerView = (RecyclerView) old_view.findViewById(R.id.bob_recycle_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -144,12 +155,18 @@ public class Older_Fragment extends Fragment {
 
         @Override
         protected void onPostExecute(Boolean s) {
+            if (swipeRefreshLayout.isRefreshing()) {
+                swipeRefreshLayout.setRefreshing(false);
+            }
             Log.d("listttt", "isssss :" + listitemto.size());
             recycleAdapter = new LastFaragmentAdapter(listitemto);
             recyclerView.setAdapter(recycleAdapter);
 //            recycleAdapter.notifyDataSetChanged();
 
         }
+
+
     }
+
 
 }

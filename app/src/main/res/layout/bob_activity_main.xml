@@ -1,59 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-<LinearLayout
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
-
-    <android.support.design.widget.AppBarLayout
+    <android.support.design.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    <android.support.v7.widget.Toolbar
+        android:layout_height="match_parent"
+        >
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+
+        >
+
+    <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
         android:id="@+id/bob_widget_toolbar"
         android:background="@color/colorAccent"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:title="Orders"
         app:menu="@menu/bob_menu"
         app:layout_scrollFlags="scroll|enterAlways"
+
         >
     </android.support.v7.widget.Toolbar>
 
 
 
-    <!--<android.support.v4.widget.DrawerLayout-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:id="@+id/bob_drawer_id">-->
-<!---->
+
+
+    <android.support.v4.widget.DrawerLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:id="@+id/bob_drawer_id">
+
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+
             android:id="@+id/bob_container_view"
             android:background="#EAEAEA">
+
+
         </FrameLayout>
 
-        <!--<android.support.design.widget.NavigationView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_gravity="start"-->
-            <!--android:id="@+id/bob_nav_drawer"-->
-            <!--app:itemTextColor="@color/black"-->
-            <!--app:menu="@menu/sidemenu_drawable_custom"-->
-           <!--&gt;-->
-<!---->
-        <!--</android.support.design.widget.NavigationView>-->
-    <!--</android.support.v4.widget.DrawerLayout>-->
-</android.support.design.widget.AppBarLayout>
-</LinearLayout>
 
+
+        <android.support.design.widget.NavigationView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:id="@+id/bob_nav_drawer"
+            app:itemTextColor="@color/black"
+            app:menu="@menu/sidemenu_drawable_custom"
+           >
+            <ExpandableListView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/bob_expand_nav">
+
+            </ExpandableListView>
+
+        </android.support.design.widget.NavigationView>
+    </android.support.v4.widget.DrawerLayout>
+
+</LinearLayout>
     </android.support.design.widget.CoordinatorLayout>
+

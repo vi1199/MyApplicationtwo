@@ -16,6 +16,7 @@ public class Details_with_photos implements Comparable<Details_with_photos> {
     String Details_price;
     String Details_opid_color;
     String Details_size;
+    String Details_stage;
 
 
 
@@ -100,6 +101,13 @@ public class Details_with_photos implements Comparable<Details_with_photos> {
     }
 
 
+    public String getDetails_stage() {
+        return Details_stage;
+    }
+
+    public void setDetails_stage(String details_stage) {
+        Details_stage = details_stage;
+    }
 
     @Override
     public int compareTo(Details_with_photos o) {
